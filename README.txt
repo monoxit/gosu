@@ -43,7 +43,7 @@ DISTCC environment *optional
 Build and install:
 rake linux:package GOSU_RELEASE_VERSION=0.7.99
 cd pkg
-gem install gosu gosu-0.7.99.gem
+gem install gosu-0.7.99.gem
 
 Usage:
 cd gosu/example
