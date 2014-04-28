@@ -100,17 +100,36 @@ if `uname`.chomp == 'Darwin' then
 else
   SOURCE_FILES = BASE_FILES + LINUX_FILES
 
+  if /Raspbian/ =~ `cat /etc/issue` then
+    $INCFLAGS << " -I/opt/vc/include/GLES"
+    $INCFLAGS << " -I/opt/vc/include"
+    $CFLAGS << " -DRASPBERRY_PI"
+    $LDFLAGS << " -L/opt/vc/lib"
+  end
+
   pkg_config 'sdl2'
   pkg_config 'pangoft2'
   
-  pkg_config 'gl'
+  unless /Raspbian/ =~ `cat /etc/issue` then
+    pkg_config 'gl'
+  end
+
   pkg_config 'vorbisfile'
   pkg_config 'openal'
   pkg_config 'sndfile'
   
-  have_header 'SDL_ttf.h'   if have_library('SDL_ttf', 'TTF_RenderUTF8_Blended')
+  if /Raspbian/ =~ `cat /etc/issue` then
+    have_header 'SDL_ttf.h'   if have_library('SDL2_ttf', 'TTF_RenderUTF8_Blended')
+  else
+    have_header 'SDL_ttf.h'   if have_library('SDL_ttf', 'TTF_RenderUTF8_Blended')
+  end
   have_header 'FreeImage.h' if have_library('freeimage', 'FreeImage_ConvertFromRawBits')
   have_header 'AL/al.h'     if have_library('openal')
+
+  if /Raspbian/ =~ `cat /etc/issue` then
+    $LIBS << " -lGLESv1_CM"
+  end
+
 end
 
 # Symlink our pretty gosu.so into ../lib

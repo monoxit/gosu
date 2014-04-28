@@ -23,3 +23,37 @@ binary form, you will need to mention use of libogg and libvorbis somewhere.
 * Visit the boards,                         http://www.libgosu.org/
 * try your luck in the chat,              irc://irc.freenode.org/gosu
 * or e-mail me. Have fun, write games!         julian@raschke.de
+
+===========
+About this Raspberry Pi Prototype branch
+
+This Raspberry Pi Prototype branch, forked from the original SDL2 branch, is an unofficial prototype experiment. The built gem package was tested under the below environment.
+
+Raspberry Pi Type B Rev.2 + Raspbian + Ruby 2.0.0p451
+Linux raspberrypi 3.10.25+ #622 PREEMPT Fri Jan 3 18:41:00 GMT 2014
+
+prerequisites:
+sudo apt-get install libopenal-dev libfreeimage-dev libvorbis-dev libsndfile1-dev
+SDL2
+SDL2_ttf
+glesv1_cm in /opt/vc/lib shipped with raspbian
+
+DISTCC environment *optional
+
+Build and install:
+rake linux:package GOSU_RELEASE_VERSION=0.7.99
+cd pkg
+gem install gosu gosu-0.7.99.gem
+
+Usage:
+cd gosu/example
+ruby Tutorial.rb
+ESC to terminate
+
+Running from LXDE Terminal:
+cd gosu/example
+SDL_VIDEODRIVER=RPI ruby Tutorial.rb
+ESC to terminate and return to LXDE
+
+Masami Yamakawa
+Monoxit inc.
